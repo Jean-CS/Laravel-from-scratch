@@ -93,3 +93,31 @@ BUT to do the above you need to explicitly tell the model to allow it
 class Note extends Model {
     protected $fillable = ['body'];
 }`
+
+# Updating Records and Eager Loading
+
+### PATCH request Work-around
+Some browsers dont understand some REST principles (PATCH, DELETE), so we need to implement a work around.
+The form needs to be as follows:
+`<form method='POST>
+    {{ method_field('PATCH') }}
+    ||
+    {{ method_field('DELETE') }}
+</form>'`
+When we submit the form, Laravel is going to check if the form has anything with the name 'PATCH', and, if so, that means the user wants a special request type. And since we want a 'PATCH' request, Laravel looks for one in our routes.
+
+### Creating the user, note and card
+`php artisan tinker`
+`namespace App;
+$card = new Card;
+$card->title = 'My First Card';
+$card->save();
+$note = new Note;
+$note->user_id = 1;
+$note->body = 'The body of the note.';
+$card->addNote($note);
+$user = new User;
+$user->username = 'Username';
+$user->email = 'email@email.com';
+$user->password = bcrypt('password');
+$user->save();`

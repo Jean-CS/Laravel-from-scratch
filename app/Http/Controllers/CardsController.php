@@ -25,6 +25,9 @@ class CardsController extends Controller
 
     // Route-Model-Binding
     public function show(Card $card) {
+        // Query the database for the Card-Notes relationship and also the User relationship. Thus avoiding the N + 1 problem.
+        $card->load('notes.user'); // EAGER LOAD (Query everything you need at once to avoid querying the database unnecessarily)
+
         // Looks for a 'show.blade.php' file in 'resources/views/cards'
         return view('cards.show', compact('card'));
     }

@@ -9,7 +9,15 @@
 
             <ul class="list-group">
                 @foreach ($card->notes as $note)
-                    <li class="list-group-item">{{ $note->body }}</li>
+                    <li class="list-group-item">
+                        {{ $note->body }}
+                        <span class="pull-right">
+                            <a href="{{ $note->path() }}">
+                                Edit
+                            </a>
+                        </span>
+                        <p style="margin: 0px; font-size: 12px; font-weight: bold;">&#8212; {{ $note->user->username }}</p>
+                    </li>
                 @endforeach
             </ul>
 
@@ -21,6 +29,7 @@
                     <textarea name="body" class="form-control"></textarea>
                 </div>
 
+                {{-- Needed for handling csrf token mismatch error --}}
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                 <div class="form-group">

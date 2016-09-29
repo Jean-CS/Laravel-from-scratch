@@ -25,17 +25,24 @@
             <h3>Add a New Note</h3>
 
             <form method="post" action="/cards/{{ $card->id }}/notes">
-                <div class="form-group">
-                    <textarea name="body" class="form-control"></textarea>
-                </div>
+                {{ csrf_field() }}
 
-                {{-- Needed for handling csrf token mismatch error --}}
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <div class="form-group">
+                    <textarea name="body" class="form-control" >{{ old('body') }}</textarea>
+                </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Add Note</button>
                 </div>
             </form>
+
+            @if (count($errors))
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
 

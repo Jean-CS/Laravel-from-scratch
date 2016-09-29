@@ -121,3 +121,12 @@ $user->username = 'Username';
 $user->email = 'email@email.com';
 $user->password = bcrypt('password');
 $user->save();`
+
+# Validation and More
+## Forms
+Always include `{{ csrf_field() }}` into your forms.
+## Validation
+`$this->validate($request, [
+    'body' => 'required|unique'
+    'email' => ['email', 'unique']
+]);`

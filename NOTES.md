@@ -128,5 +128,5 @@ Always include `{{ csrf_field() }}` into your forms.
 ## Validation
 `$this->validate($request, [
     'body' => 'required|unique'
-    'email' => ['email', 'unique']
+    'email' => ['email', 'unique:users']
 ]);`

@@ -130,3 +130,28 @@ Always include `{{ csrf_field() }}` into your forms.
     'body' => 'required|unique'
     'email' => ['email', 'unique:users']
 ]);`
+
+# Authenticate Users
+This is generally done at the beginning of a project, rather than later. So start with a new project
+`laravel new some-project
+php artisan make:auth
+touch database/database.sqlite`
+Don't forget to change the database connection to 'sqlite' in `database.php`
+`php artisan migrate`
+And it's done!
+## Included features
+ - Registration
+ - Login
+ - Logout
+ - Authentication (only logged user can access /home)
+ - Password reset
+
+Remember: You need to enable email configurations for password resets
+
+File: `.env`
+The default mail driver is `MAIL_DRIVER=smtp` (production)
+When locally, change to `MAIL_DRIVER=log`. Logs are located at `storage/logs`
+
+File: `config/mail.php`
+Specify the FROM address
+`'from' => ['address' => 'some@email.com', 'name' => 'Some Name'],`

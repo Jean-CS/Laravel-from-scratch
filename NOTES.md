@@ -131,6 +131,7 @@ Always include `{{ csrf_field() }}` into your forms.
     'email' => ['email', 'unique:users']
 ]);`
 
+
 # Authenticate Users
 This is generally done at the beginning of a project, rather than later. So start with a new project
 `laravel new some-project

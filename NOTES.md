@@ -156,3 +156,29 @@ When locally, change to `MAIL_DRIVER=log`. Logs are located at `storage/logs`
 File: `config/mail.php`
 Specify the FROM address
 `'from' => ['address' => 'some@email.com', 'name' => 'Some Name'],`
+
+# Understanding Middleware
+Middlewares are layers of an application. When a request is made, it goes through middleware until it reaches the core.</br>
+Each middleware has a `handle()` function that is responsible for processing the request and either aborting or sending it to the next layer.</br>
+There are three types of middleware in Laravel:</br>
+**Global**, **Groups**, **Route**
+ - Global middleware runs on every single request to the application `CheckForMaintenanceMode::class`
+ - Groups middleware wrap around routes. `'web' => [...]`
+ - Route middleware is specific to a single route `'auth' => ...`
+
+### Regarding production and the global middleware
+In production, when it needs some maintenance, run `php artisan down`. It will keep the site up, but users will only see a warning page, until you run `php artisan up`.</br>
+This is possible because the global middleware `CheckForMaintenanceMode::class`
+
+
+There are two ways to reference middleware: In the  **Constructor** or **Routes**</br>
+Example: `HomeController.php`</br>
+`public function __construct() { $this->middleware('auth'); }`
+Example: `routes.php`</br>
+`Route::get('/dashboard', 'HomeController@index')->middleware('auth');`
+
+You can also apply middleware only to specific methods</br>
+`HomeController.php`</br>
+`public function __construct() { $this->middleware('auth', ['only' => 'index']); }`</br>
+Or except</br>
+`public function __construct() { $this->middleware('auth', ['except' => 'index']); }`</br>

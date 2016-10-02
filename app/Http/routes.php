@@ -10,14 +10,37 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::group(['middlware' => ['web']], function() {
 
-Route::get('cards', 'CardsController@index');
-Route::get('cards/{card}', 'CardsController@show');
+    Route::get('dummy', function() {
+        /*
+        There are several ways to flash to the session
 
-Route::post('cards/{card}/notes', 'NotesController@store');
+                session(['foo' => 'bar']);
+            EQUIVALENT TO
+                Session::put('foo', 'bar');
 
-Route::get('/notes/{note}/edit', 'NotesController@edit');
-Route::patch('notes/{note}', 'NotesController@update');
+                session('foo'); Returns 'bar'
+            EQUIVALENT TO
+                Session::get('foo');
+         */
+        // Session::flash('status', 'Hello there');
+        session()->flash('status', 'Here is my status');
+        return redirect('/');
+    });
+    Route::get('/', function() {
+        return view('welcome');
+    });
+
+    Route::get('cards', 'CardsController@index');
+    Route::get('cards/{card}', 'CardsController@show');
+
+    Route::post('cards/{card}/notes', 'NotesController@store');
+
+    Route::get('/notes/{note}/edit', 'NotesController@edit');
+    Route::patch('notes/{note}', 'NotesController@update');
+});
+
 
 // Route::get('cards/create', 'CardsController@create');
 // Route::post('cards', 'CardsController@store');

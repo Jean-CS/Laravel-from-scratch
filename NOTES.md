@@ -182,3 +182,5 @@ You can also apply middleware only to specific methods</br>
 `public function __construct() { $this->middleware('auth', ['only' => 'index']); }`</br>
 Or except</br>
 `public function __construct() { $this->middleware('auth', ['except' => 'index']); }`</br>
+
+# Flashing the Session

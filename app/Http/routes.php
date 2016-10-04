@@ -16,6 +16,8 @@ Route::group(['middlware' => ['web']], function() {
         /*
         There are several ways to flash to the session
 
+            Session::flash('status', 'Hello there');
+
                 session(['foo' => 'bar']);
             EQUIVALENT TO
                 Session::put('foo', 'bar');
@@ -24,8 +26,9 @@ Route::group(['middlware' => ['web']], function() {
             EQUIVALENT TO
                 Session::get('foo');
          */
-        // Session::flash('status', 'Hello there');
-        session()->flash('status', 'Here is my status');
+
+        // Helper function from app/Helpers/flash.php
+        flash('You are now signed in', 'success'); // success; error; default is info
         return redirect('/');
     });
     Route::get('/', function() {

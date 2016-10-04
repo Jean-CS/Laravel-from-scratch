@@ -184,3 +184,5 @@ Or except</br>
 `public function __construct() { $this->middleware('auth', ['except' => 'index']); }`</br>
 
 # Flashing the Session
+To explain flashing to the session lets use an example:
+ - After logging out, redirect the user to the home page and display a flash message informing the log out. And that message will only happen once per session.

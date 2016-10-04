@@ -186,3 +186,45 @@ Or except</br>
 # Flashing the Session
 To explain flashing to the session lets use an example:
  - After logging out, redirect the user to the home page and display a flash message informing the log out. And that message will only happen once per session.
+
+# Automatic Resolution and the Service Container | Dependency Injection
+## Regarding Dependency Injection
+Two ways to apply it:
+ - Through the constructor
+ ```
+ class RegistersUsers {
+     protected $mailer;
+     public function __construct(Mailer $mailer) {
+         $this->mailer = $mailer;
+     }
+ }
+ ```
+ - Through method injection
+ ```
+ public function setMailer(Mailer $mailer) {
+     $this->mailer = $mailer;
+ }
+ ```
+To instantiate this class we would do something like this:</br>
+`$registration = new RegistersUsers(new Mailer(new MailerDependecy));`</br>
+Hmm, doesn't look good, right?</br>
+Imagine we had this class: `class Mail {  }`</br>
+We want to bind a new RegistersUsers to the Service Container</br>
+```
+App::bind('foo', function() {
+    return new RegistersUsers(new Mailer);
+});
+```
+Now, you just need to call 'foo' to get a new object. How do I call 'foo' ?</br>
+Like this: `var_dump(app('foo'));` OR `var_dump(App::make('foo'));`
+
+What If I want a singleton of this object?</br>
+Just do `App::singleton('foo', function() { return new RegistersUsers(new Mailer); });`
+
+How do I pass this object into a route?
+Like so:
+```
+Route::get('/', function(RegistersUsers $registration) {
+    ...
+});
+```
